@@ -13,5 +13,6 @@ var preload = function(){
 
   game.stage.backgroundColor = '#141B2D';
 
+  // load music
   game.load.audio('boden', ['assets/audio/bodenstaendig_2000_in_rock_4bit.mp3', 'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg']);
 };

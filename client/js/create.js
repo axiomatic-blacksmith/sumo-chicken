@@ -83,7 +83,6 @@ var create = function(){
 
   // Music
   music = game.add.audio('boden');
-  console.log(music);
   music.play();
 };
 
