@@ -1,5 +1,7 @@
 var lastData = null;
 var scoreList = [];
+var heartData = null;
+var isHeart = false;
 
 // platforms are [x, y, spriteKey, scale] and ordered by height
 var platformLocations = [[0, -175, 'platform', 2],
@@ -38,6 +40,8 @@ var explosion = new Explosion();
 
 
 var heart;
+var score = 0;
+var scoreText;
 var create = function(){
   socket = io.connect({query: 'mode=' + selectedMode});
   socket.emit('username', {username: playerUsername});
@@ -144,6 +148,7 @@ var create = function(){
   scoreText.fixedToCamera = true;
   scoreText.cameraOffset.setTo(10, 10);
 
+
 };
 
 
@@ -245,6 +250,34 @@ var setCamera = function(){
                                               game.camera.width - cameraMargin * 2,
                                               game.camera.height - cameraMargin * 2);
   game.camera.focusOnXY(0, 0);
+};
+
+var createHearts = function(){
+
+  hearts = game.add.group();
+  hearts.enableBody = true;
+
+  socket.on('updateHearts', function(data){
+    heartData = data; 
+  })
+
+  // //  Here we'll create 12 of them evenly spaced apart
+  //   for (var i = 0; i < 15; i++)
+  //   {
+  //       //  Create a star inside of the 'hearts' group
+  //       var heart = hearts.create(, , 'heart');
+
+  //       //  Let gravity do its thing
+  //       // heart.body.gravity.y = 6;
+
+  //       //  This just gives each star a slightly random bounce value
+  //       // heart.body.bounce.y = 0.7 + Math.random() * 0.2;
+    }
+  
+  scoreTextHeart = game.add.bitmapText(0, 0, 'carrier_command', 'collected: 0', 30);
+  scoreTextHeart.fixedToCamera = true;
+  scoreTextHeart.cameraOffset.setTo(10, 10);
+
 };
 
 
