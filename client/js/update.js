@@ -123,6 +123,11 @@ var update = function(){
 
 var collideChickens = function(otherChicken, thisChicken) {
   audioSprite.play('bump');
+
+  // bump fireball effect
+  var fireball = makeFireball(Math.min(otherChicken.x, thisChicken.x) - 16, (otherChicken.y + thisChicken.y - 64) / 2);
+  fireball.animations.play('explode', 30, false);
+
   if (!otherChicken.paused) {
     thisChicken.lastCollidedWith = otherChicken.socketId;
     var right;
@@ -192,4 +197,14 @@ var displayScoreBoard = function(data) {
   scoreboard.fixedToCamera = true;
   scoreboard.cameraOffset.setTo(game.camera.width - scoreboard.width, 10);
   scoreboard.lifespan = 1;
+};
+
+var makeFireball = function(x, y) {
+  var fireball = game.add.sprite(x, y, 'fireball');
+  var explode = fireball.animations.add('explode');
+
+  setTimeout(function() {
+    fireball.kill();
+  }, 1000);
+  return fireball;
 };
