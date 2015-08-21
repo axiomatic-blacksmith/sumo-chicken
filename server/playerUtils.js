@@ -78,6 +78,9 @@ var pausePlayer = function(socketID, pausedOrResumed) {
   playerInformation[socketID].paused = pausedOrResumed;
 };
 
+var win = function(socketID) {
+  serverUtils.getLobbyById(socketID).gameOver(socketID);
+};
 
 module.exports = {
   newPlayer : newPlayer,
@@ -89,5 +92,6 @@ module.exports = {
   getStartLoc : getStartLoc,
   incrementKills : incrementKills,
   resetKills : resetKills,
-  pausePlayer: pausePlayer
+  pausePlayer: pausePlayer,
+  win: win
 };
