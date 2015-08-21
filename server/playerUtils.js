@@ -92,5 +92,6 @@ module.exports = {
   getStartLoc : getStartLoc,
   incrementKills : incrementKills,
   resetKills : resetKills,
-  pausePlayer: pausePlayer
+  pausePlayer: pausePlayer,
+  win: win
 };
