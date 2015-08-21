@@ -40,11 +40,6 @@ var update = function(){
           player.level = lastData[chicken].kills;
           upgradeChicken(player, player.level);
         }
-        if (player.score !== lastData[chicken].kills) {
-          console.log(player.score);
-          player.score = lastData[chicken].kills;
-          upgradeChicken(player, player.score);
-        }
       }
     });
     for (var chicken in otherChickens) {
@@ -143,9 +138,7 @@ var collectHeart =  function (player, heart) {
     // Removes the star from the screen
     console.log("heart killed, heart id: "+heart.id);
     heart.kill();
-    scoreHeart += 10;
-    scoreTextHeart.text = 'collected: ' + scoreHeart;
-    socket.emit('heartKill', {heart:heart.id, score: scoreHeart});
+    socket.emit('heartKill', {heart: heart.id});
 
 };
 
