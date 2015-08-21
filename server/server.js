@@ -33,14 +33,16 @@ io.on('connection', function(socket) {
 
     var lobbyPlayersIDs = playerLobby.getPlayerIDs();
 
+    var player = playerUtils.getPlayers()[socket.id];
+    player.score++;
+
     // Remove the heart from the source of truth 
     playerLobby.removeHeart(data.heart);
 
     lobbyPlayersIDs.forEach(function(socketID){
       io.sockets.connected[socketID].emit('heartKill',{
         player:socket.id,
-        heart: data.heart,
-        score: data.score
+        heart: data.heart
       });
     });
     
@@ -64,6 +66,11 @@ io.on('connection', function(socket) {
       if (data.killer !== null) {
         killer.kills++;
         killer.score++;
+      }
+    } else if (mode === 'Hearts') {
+      player.kills = 0;
+      if (data.killer !== null) {
+        killer.kills++;
       }
     } else { // Classic
       player.kills = 0;

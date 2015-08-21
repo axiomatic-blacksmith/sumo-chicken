@@ -40,9 +40,7 @@ var explosion = new Explosion();
 
 var hearts,
     score = 0,
-    scoreText,
-    scoreHeart = 0,
-    scoreTextHeart;
+    scoreText;
 
 var create = function(){
 
@@ -54,7 +52,6 @@ var create = function(){
     // console.log(gameHearts);
     createHearts(gameHearts);
   });
-  createHearts();
 
   socket.emit('username', {username: playerUsername});
 
@@ -137,29 +134,6 @@ var create = function(){
   audioSprite.addMarker('bump', 1, 1.0);
   audioSprite.addMarker('dash', 12, 4.2);
   audioSprite.addMarker('jump', 8, 0.5);
-
-  // create new collectables
-
-  hearts = game.add.group();
-  hearts.enableBody = true;
-  //  Here we'll create 12 of them evenly spaced apart
-    for (var i = 0; i < 100; i++)
-    {
-        //  Create a star inside of the 'hearts' group
-        var heart = hearts.create(game.camera.randomX, game.camera.randomY, 'heart');
-
-        //  Let gravity do its thing
-        // heart.body.gravity.y = 6;
-
-        //  This just gives each star a slightly random bounce value
-        // heart.body.bounce.y = 0.7 + Math.random() * 0.2;
-    }
-  var score = 0;
-  var scoreText;
-  
-  scoreText = game.add.bitmapText(0, 0, 'carrier_command', 'collected: 0', 30);
-  scoreText.fixedToCamera = true;
-  scoreText.cameraOffset.setTo(10, 10);
 
 
 };
@@ -293,17 +267,7 @@ var createHearts = function(gameHearts){
     hearts.filter(function(child){return child.id === heartID;}).first.kill();
 
   });
-  scoreTextHeart = game.add.bitmapText(0, 0, 'carrier_command', 'collected: 0', 30);
-
-  scoreTextHeart.fixedToCamera = true;
-  scoreTextHeart.cameraOffset.setTo(10, 110);
-
-   game.time.events.add(6750, function() {
-    game.add.tween(scoreTextHeart.cameraOffset).to({x:10, y:10}, 1500, Phaser.Easing.Linear.None, true);
-  }, this);
-
-
-
+  
 
   // //  Here we'll create 12 of them evenly spaced apart
   //   for (var i = 0; i < 15; i++)
