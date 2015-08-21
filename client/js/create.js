@@ -129,12 +129,34 @@ var create = function(){
   // Sound Effects
   sfx = game.add.audio('explosion');
   sfx.addMarker('explosion', 1, 2.5);
-  
+
   audioSprite = game.add.audio('audioSprite');
   audioSprite.addMarker('bump', 1, 1.0);
   audioSprite.addMarker('dash', 12, 4.2);
   audioSprite.addMarker('jump', 8, 0.5);
 
+  // create new collectables
+
+  hearts = game.add.group();
+  hearts.enableBody = true;
+  //  Here we'll create 12 of them evenly spaced apart
+    for (var i = 0; i < 100; i++)
+    {
+        //  Create a star inside of the 'hearts' group
+        var heart = hearts.create(game.camera.randomX, game.camera.randomY, 'heart');
+
+        //  Let gravity do its thing
+        // heart.body.gravity.y = 6;
+
+        //  This just gives each star a slightly random bounce value
+        // heart.body.bounce.y = 0.7 + Math.random() * 0.2;
+    }
+  var score = 0;
+  var scoreText;
+
+  scoreText = game.add.bitmapText(0, 0, 'carrier_command', 'collected: 0', 30);
+  scoreText.fixedToCamera = true;
+  scoreText.cameraOffset.setTo(10, 10);
 
 };
 
@@ -184,16 +206,27 @@ var addNewChicken = function(socketId, data) {
 };
 
 var drawEnvironment = function() {
+
   // draw a red colored rectangle to go below lava
   var graphics = game.add.graphics(0, 0);
   graphics.beginFill(0xDD2200, 1);
   graphics.drawRect(-2000,0, 4000, 4000);
   graphics.endFill();
 
-  // add the forest background
-  background = game.add.tileSprite(-2000, -400, 4000, 400, "background");
-  background.scale.x = 2;
-  background.scale.y = 2;
+  if (selectedMode === 'Kill Count') {
+    background = game.add.tileSprite(-2000, -400, 4000, 400, "background-killmode");
+    background.scale.x = 2;
+    background.scale.y = 2;
+  } else if (selectedMode === 'Hearts') {
+    game.stage.backgroundColor = '#2290cd';
+    background = game.add.tileSprite(-2000, -400, 4000, 400, "background-hearts");
+    background.scale.x = 2;
+    background.scale.y = 2;
+  } else {
+    background = game.add.tileSprite(-2000, -400, 4000, 400, "background");
+    background.scale.x = 2;
+    background.scale.y = 2;
+  }
 
   // add the lava at the bottom
   lava = game.add.tileSprite(-2000, 365,4000,180,"lava");
@@ -245,7 +278,7 @@ var createHearts = function(gameHearts){
   hearts.enableBody = true;
 
   // socket.on('syncHeart', function(gameHearts){
-    heartData = gameHearts; 
+    heartData = gameHearts;
     for(var key in heartData){
       // data is an obj, ex {x:220, y:123, id:3}
       data = heartData[key];
@@ -256,7 +289,7 @@ var createHearts = function(gameHearts){
       heart.scale.x = 0.5;
       heart.scale.y = 0.5;
       heart.id = data.id;
-      heart.body.immovable = true; 
+      heart.body.immovable = true;
     }
   // });
 
@@ -267,7 +300,7 @@ var createHearts = function(gameHearts){
     hearts.filter(function(child){return child.id === heartID;}).first.kill();
 
   });
-  
+
 
   // //  Here we'll create 12 of them evenly spaced apart
   //   for (var i = 0; i < 15; i++)
@@ -281,7 +314,7 @@ var createHearts = function(gameHearts){
   //       //  This just gives each star a slightly random bounce value
   //       // heart.body.bounce.y = 0.7 + Math.random() * 0.2;
 };
-  
+
 
 
 
