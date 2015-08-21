@@ -3,6 +3,7 @@ var express     = require('express'),
     path        = require('path'),
     playerUtils = require('./playerUtils.js'),
     serverUtils = require('./serverUtils.js');
+    heartsUtils = require('./heartsUtils.js');
 
 var app = express();
 var server = http.Server(app);
@@ -22,6 +23,30 @@ io.on('connection', function(socket) {
   var mode = socket.handshake.query.mode;
   playerUtils.newPlayer(socket.id, mode);
 
+  var playerLobby = serverUtils.getLobbyById(socket.id);
+
+  if(mode === 'Hearts' && !playerLobby.hasHearts) heartsUtils.addHeartsToLobby(playerLobby);
+
+  if(mode === 'Hearts') socket.emit('syncHeart', playerLobby.getHearts());
+  
+  socket.on('heartKill', function(data){
+
+    var lobbyPlayersIDs = playerLobby.getPlayerIDs();
+
+    // Remove the heart from the source of truth 
+    playerLobby.removeHeart(data.heart);
+
+    lobbyPlayersIDs.forEach(function(socketID){
+      io.sockets.connected[socketID].emit('heartKill',{
+        player:socket.id,
+        heart: data.heart,
+        score: data.score
+      });
+    });
+    
+    
+  });
+
   socket.on('username', function(data) {
     playerUtils.setUsername(socket.id, data.username);
   });
@@ -29,6 +54,7 @@ io.on('connection', function(socket) {
   socket.on('sync', function(data) {
     playerUtils.updatePlayer(socket.id, data);
   });
+
   
   socket.on('death', function(data) {
     var player = playerUtils.getPlayers()[socket.id];
@@ -69,6 +95,20 @@ io.on('connection', function(socket) {
 // SENT: a hash with player information at corresponding socketIDs
 setInterval(function() {
   connectedSockets.forEach(function(socketID) {
+
+    // Only send sync info for players that are also in the same lobby
+    // as the user with socketID.
     io.sockets.connected[socketID].emit('sync', playerUtils.getPlayersByLobby(socketID));
   });
 }, 50);
+
+setInterval(function(){
+
+}, 1000);
+
+/*
+
+
+
+
+*/

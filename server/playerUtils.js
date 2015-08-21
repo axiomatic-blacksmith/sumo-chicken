@@ -23,6 +23,7 @@ var getPlayers = function() {
   return playerInformation;
 };
 
+// This returns players loc info, NOT their socket IDs
 var getPlayersByLobby = function(socketID) {
   var lobby = serverUtils.getLobbyById(socketID);
   var playerIDs = lobby.getPlayerIDs();
@@ -76,6 +77,7 @@ var resetKills = function(socketID) {
 var pausePlayer = function(socketID, pausedOrResumed) {
   playerInformation[socketID].paused = pausedOrResumed;
 };
+
 
 module.exports = {
   newPlayer : newPlayer,

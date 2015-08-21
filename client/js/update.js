@@ -27,8 +27,10 @@ var update = function(){
     syncKeys.forEach(function(chicken) {
       scoreList.push([lastData[chicken].username, lastData[chicken].score]);
       if (chicken !== socket.id) {
+        // console.log(lastData[chicken]);
         if (otherChickens[chicken]) {
           syncExistingChicken(otherChickens[chicken], lastData[chicken]);
+          
         } else {
           addNewChicken(chicken, lastData[chicken]);
         }
@@ -37,6 +39,11 @@ var update = function(){
         if (player.level !== lastData[chicken].kills) {
           player.level = lastData[chicken].kills;
           upgradeChicken(player, player.level);
+        }
+        if (player.score !== lastData[chicken].kills) {
+          console.log(player.score);
+          player.score = lastData[chicken].kills;
+          upgradeChicken(player, player.score);
         }
       }
     });
@@ -65,11 +72,19 @@ var update = function(){
 
   game.physics.arcade.collide(player, platforms);
 
-  // Ensure that players cannot go through the platforms if other players jump on them
+  // Remove hearts that overlap with existing platforms
+  game.physics.arcade.overlap(hearts, platforms, function(heart, platform){
+    heart.kill();
+  });
+
+  // heart 1 line  // Ensure that players cannot go through the platforms if other players jump on them
   game.physics.arcade.overlap(player, platforms, function(playerSprite, platform) {
     var abovePlatform = platform.top - (playerSprite.height/2) - 5; // 5 is to offset player.js line 18
     playerSprite.y = abovePlatform;
   });
+
+  //On overlap, have hearts disappear
+  game.physics.arcade.overlap(player, hearts, collectHeart , null, this);
 
 
   for (var key in otherChickens) {
@@ -112,13 +127,26 @@ var update = function(){
   }
 
   // Increase stored dashMeter
-  player.chargeDash();
+  player.chargeDash();  
 
   // chicken falls below lava
   if (player.y > 365) {
     music.stop();
     explosion.play();
   }
+
+};
+
+
+
+var collectHeart =  function (player, heart) {
+    // Removes the star from the screen
+    console.log("heart killed, heart id: "+heart.id);
+    heart.kill();
+    scoreHeart += 10;
+    scoreTextHeart.text = 'collected: ' + scoreHeart;
+    socket.emit('heartKill', {heart:heart.id, score: scoreHeart});
+
 };
 
 var collideChickens = function(otherChicken, thisChicken) {

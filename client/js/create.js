@@ -1,5 +1,7 @@
 var lastData = null;
 var scoreList = [];
+var heartData = null;
+var isHeart = false;
 
 // platforms are [x, y, spriteKey, scale] and ordered by height
 var platformLocations = [[0, -175, 'platform', 2],
@@ -14,6 +16,7 @@ var platformLocations = [[0, -175, 'platform', 2],
                          [1100, 375, 'cloud', 1], [-1100, 375, 'cloud', 1],
                          [800, 375, 'cloud', 1], [-800, 375, 'cloud', 1],
                          [400, 350, 'platform', 2], [-400, 350, 'platform', 2]];
+
 
 var music;
 var sfx;
@@ -35,13 +38,30 @@ var Explosion = function() {
 
 var explosion = new Explosion();
 
+var hearts,
+    score = 0,
+    scoreText,
+    scoreHeart = 0,
+    scoreTextHeart;
+
 var create = function(){
+
   socket = io.connect({query: 'mode=' + selectedMode});
+
+  socket = io.connect();
+  socket.on('syncHeart', function(gameHearts){
+    // console.log('create.js on client: syncHeart fired, gameHearts: ');
+    // console.log(gameHearts);
+    createHearts(gameHearts);
+  });
+  createHearts();
+
   socket.emit('username', {username: playerUsername});
 
   //  Phaser will automatically pause if the browser tab the game is in loses focus. Disabled this below.
   //  NOTE: Uncomment the following line for testing if you want to have two games playing in two browsers.
-   this.stage.disableVisibilityChange = true;
+
+  this.stage.disableVisibilityChange = true;
 
   game.world.setBounds(-2000, -2000, 4000, 4000 );
   game.time.desiredFps = 45;
@@ -102,6 +122,7 @@ var create = function(){
   cursors = game.input.keyboard.createCursorKeys();
 
   game.onPause.add(pauseGame, this);
+
   game.onResume.add(resumeGame, this);
 
   // Music
@@ -111,12 +132,38 @@ var create = function(){
   // Sound Effects
   sfx = game.add.audio('explosion');
   sfx.addMarker('explosion', 1, 2.5);
+  
   audioSprite = game.add.audio('audioSprite');
   audioSprite.addMarker('bump', 1, 1.0);
   audioSprite.addMarker('dash', 12, 4.2);
   audioSprite.addMarker('jump', 8, 0.5);
 
+  // create new collectables
+
+  hearts = game.add.group();
+  hearts.enableBody = true;
+  //  Here we'll create 12 of them evenly spaced apart
+    for (var i = 0; i < 100; i++)
+    {
+        //  Create a star inside of the 'hearts' group
+        var heart = hearts.create(game.camera.randomX, game.camera.randomY, 'heart');
+
+        //  Let gravity do its thing
+        // heart.body.gravity.y = 6;
+
+        //  This just gives each star a slightly random bounce value
+        // heart.body.bounce.y = 0.7 + Math.random() * 0.2;
+    }
+  var score = 0;
+  var scoreText;
+  
+  scoreText = game.add.bitmapText(0, 0, 'carrier_command', 'collected: 0', 30);
+  scoreText.fixedToCamera = true;
+  scoreText.cameraOffset.setTo(10, 10);
+
+
 };
+
 
 var pauseGame = function() {
   socket.emit('pause');
@@ -132,6 +179,7 @@ var upgradeChicken = function(chicken, score) {
 };
 
 var syncExistingChicken = function(chicken, data) {
+
   if (data.username !== '') chicken.addUsernameLabel(data.username);
   if (!data.paused) {
     chicken.tint = 0xFFFFFF;
@@ -216,4 +264,60 @@ var setCamera = function(){
                                               game.camera.height - cameraMargin * 2);
   game.camera.focusOnXY(0, 0);
 };
+
+var createHearts = function(gameHearts){
+
+  hearts = game.add.group();
+  hearts.enableBody = true;
+
+  // socket.on('syncHeart', function(gameHearts){
+    heartData = gameHearts; 
+    for(var key in heartData){
+      // data is an obj, ex {x:220, y:123, id:3}
+      data = heartData[key];
+
+      var heart = hearts.create(data.positionX, data.positionY, 'heart');
+      // console.log('client, creat.js, heart created, ');
+      // console.log(heart);
+      heart.scale.x = 0.5;
+      heart.scale.y = 0.5;
+      heart.id = data.id;
+      heart.body.immovable = true; 
+    }
+  // });
+
+  socket.on('heartKill', function(data){
+    // hearts.filter(function(child){return child.id === 8}).first.kill();
+    var heartID = data.heart;
+    // TODO: update other player score
+    hearts.filter(function(child){return child.id === heartID;}).first.kill();
+
+  });
+  scoreTextHeart = game.add.bitmapText(0, 0, 'carrier_command', 'collected: 0', 30);
+
+  scoreTextHeart.fixedToCamera = true;
+  scoreTextHeart.cameraOffset.setTo(10, 110);
+
+   game.time.events.add(6750, function() {
+    game.add.tween(scoreTextHeart.cameraOffset).to({x:10, y:10}, 1500, Phaser.Easing.Linear.None, true);
+  }, this);
+
+
+
+
+  // //  Here we'll create 12 of them evenly spaced apart
+  //   for (var i = 0; i < 15; i++)
+  //   {
+  //       //  Create a star inside of the 'hearts' group
+  //       var heart = hearts.create(, , 'heart');
+
+  //       //  Let gravity do its thing
+  //       // heart.body.gravity.y = 6;
+
+  //       //  This just gives each star a slightly random bounce value
+  //       // heart.body.bounce.y = 0.7 + Math.random() * 0.2;
+};
+  
+
+
 
