@@ -1,8 +1,3 @@
-// gameHearts and gameStart are lobby-specific 
-// refactor to be lobby specific
-var gameHearts = {};
-var gameStart = false;
-
 var randomLocationGenerator = function(){
   // positionX -2000, 2000
   // positionY -2000, 2000
@@ -22,40 +17,60 @@ var Heart = function(x,y) {
   };
 };
 
-var getHearts = function() {
-  return gameHearts;
-};
+var addHeartsToLobby = function(lobby){
+  gameHearts = {};
+  gameStart = true;
+  heartCounter = 0;
 
-var removeHeart = function(id){
-  if(!gameHearts[id]) return null;
-  delete gameHearts[id];
-};
-
-
-var gameStarted = function(){
-  return gameStart;
-};
-
-// TODO if time: add random hearts
-var addHeart = function(x,y){
-
-};
-
-var startingHearts = function(){
-  console.log("server: calling starting hearts");
+  // initial add to lobby adds random hearts
   for (var i=0; i<25; i++) {
     var heart = Heart(i*80-1000, randomLocationGenerator().y);
     // TODO: unique id
-    heart.id = i;
-    gameHearts[i] = heart;
+    heart.id = heartCounter;
+    gameHearts[heartCounter++] = heart;
   }
-  gameStart = true;
-  console.log("startingHearts complete, gameStart: "+gameStart);
+
+  lobby.hasHearts = true;
+
+  lobby.getHearts = function(){
+    return gameHearts;
+  };
+
+  lobby.gameStarted = function(){
+    return gameStart;
+  };
+
+  lobby.removeHeart = function(id){
+    if(!gameHearts[id]) return null;
+    delete gameHearts[id];
+  };
+
+  lobby.gameHasStarted = function(){
+    gameStart = true;
+  };
+
+  lobby.gameHasEnded = function(){
+    gameStart = false;
+  };
+
+  lobby.addHeart = function(heartLocObj){
+    // heartLocObj --- { positionX : x , position Y: y}
+    // Should come from the Heart constructor
+  };
 };
 
+// var startingHearts = function(){
+//   console.log("server: calling starting hearts");
+//   for (var i=0; i<25; i++) {
+//     var heart = Heart(i*80-1000, randomLocationGenerator().y);
+//     // TODO: unique id
+//     heart.id = i;
+//     gameHearts[i] = heart;
+//   }
+//   gameStart = true;
+//   console.log("startingHearts complete, gameStart: "+gameStart);
+// };
+
 module.exports = {
-  getHearts: getHearts,
-  startingHearts: startingHearts,
-  gameStarted: gameStarted,
-  removeHeart: removeHeart
+  addHeartsToLobby : addHeartsToLobby
 };

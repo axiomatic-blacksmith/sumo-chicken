@@ -20,32 +20,21 @@ io.on('connection', function(socket) {
   console.log('Connected: ', socket.id);
   connectedSockets.push(socket.id);
 
-
   var mode = socket.handshake.query.mode;
   playerUtils.newPlayer(socket.id, mode);
 
   var playerLobby = serverUtils.getLobbyById(socket.id);
-  
 
+  if(mode === 'Hearts' && !playerLobby.hasHearts) heartsUtils.addHeartsToLobby(playerLobby);
 
-  // TODO: add handling for mode selection, add mode as second argument to the following function call:
-  
-  // This is where players are added to a Lobby
-  playerUtils.newPlayer(socket.id);
-
-
-  if(!heartsUtils.gameStarted()) heartsUtils.startingHearts();
-
-  console.log("Hearts game started? "+heartsUtils.gameStarted());
-  
-  if(mode === 'Hearts') socket.emit('syncHeart', heartsUtils.getHearts());
+  if(mode === 'Hearts') socket.emit('syncHeart', playerLobby.getHearts());
   
   socket.on('heartKill', function(data){
 
-    var lobbyPlayersIDs = serverUtils.getLobbyById(socket.id).getPlayerIDs();
+    var lobbyPlayersIDs = playerLobby.getPlayerIDs();
 
     // Remove the heart from the source of truth 
-    heartsUtils.removeHeart(data.heart);
+    playerLobby.removeHeart(data.heart);
 
     lobbyPlayersIDs.forEach(function(socketID){
       io.sockets.connected[socketID].emit('heartKill',{
