@@ -24,7 +24,7 @@ var getNextLobby = function(mode) {
   }
 
   if (!lobby) {
-    lobby = new Lobby(maxLobbySize);
+    lobby = new Lobby(maxLobbySize, mode);
     lobbies[mode].push(lobby);
   }
 
