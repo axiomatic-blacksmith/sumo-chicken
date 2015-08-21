@@ -25,7 +25,21 @@ io.on('connection', function(socket) {
 
   var playerLobby = serverUtils.getLobbyById(socket.id);
 
-  if(mode === 'Hearts' && !playerLobby.hasHearts) heartsUtils.addHeartsToLobby(playerLobby);
+  if(mode === 'Hearts' && !playerLobby.hasHearts) {
+    heartsUtils.addHeartsToLobby(playerLobby);
+    playerLobby.findWinner = function() {
+      var winner = playerLobby.players[0];
+      var hiscore = playerUtils.getPlayers()[winner].score;
+      for (var i = 1; i < playerLobby.players.length; i++) {
+        var currScore = playerUtils.getPlayers()[playerLobby.players[1]].score;
+        if (currScore > hiscore) {
+          winner = players[i];
+          hiscore = currScore;
+        }
+      }
+      return winner;
+    };
+  }
 
   if(mode === 'Hearts') socket.emit('syncHeart', playerLobby.getHearts());
   
@@ -66,6 +80,9 @@ io.on('connection', function(socket) {
       if (data.killer !== null) {
         killer.kills++;
         killer.score++;
+        if (killer.score === 10) {
+          playerUtils.win(data.killer);
+        }
       }
     } else if (mode === 'Hearts') {
       player.kills = 0;
