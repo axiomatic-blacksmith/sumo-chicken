@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Karamatic';
 }
 
 #main {
@@ -36,8 +36,8 @@ input[type=submit] {
 .header {
   color: white;
   font-size: 75px;
-  background-image: url(../assets/forest.png);
-  width: 100%;
+/*  background-image: url(../assets/forest.png);
+*/  width: 100%;
 }
 
 a {
@@ -46,6 +46,7 @@ a {
 
 h1 {
   margin-top: 0px;
+  letter-spacing: 5px;
 }
 
 .teamMembers {
@@ -68,3 +69,200 @@ h1 {
 .teamMember-quote {
   text-align: justify;
 }
+
+/*@font-face {
+    font-family:"Karamatic";
+    src: url("../assets/fonts/ka1.ttf")
+}*/
+@font-face {
+    font-family:"Arcade";
+    src: url("../assets/fonts/arcade.ttf")
+}
+
+/*
+
+@font-face {
+  font-family: 'Monoton';
+  font-style: normal;
+  font-weight: 40;
+  src: local('Monoton'), local('Monoton-Regular'), url(http://themes.googleusercontent.com/static/fonts/monoton/v4/AKI-lyzyNHXByGHeOcds_w.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Iceland';
+  font-style: normal;
+  font-weight: 40;
+  src: local('Iceland'), local('Iceland-Regular'), url(http://themes.googleusercontent.com/static/fonts/iceland/v3/F6LYTZLHrG9BNYXRjU7RSw.woff) format('woff');
+}*/
+
+
+
+body{
+  /*background-color: #222222;
+  background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;*/
+  background-image: url(../assets/forest.png);
+  background-repeat: no-repeat;
+  background-position: center center fixed;
+
+   -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#container{
+  width:500px;
+  margin:auto;
+}
+
+
+/*neeeeoooon*/
+/*p{
+  text-align:center;
+  font-size:7em;
+  margin:20px 0 20px 0; 
+}*/
+
+.a{
+  text-decoration:none; 
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.red{
+  color:#fff;
+  font-family:Arcade;
+  -webkit-animation: neon1 3.5s ease-in-out infinite alternate;
+  -moz-animation: neon1 1.5s ease-in-out infinite alternate;
+  animation: neon1 1.5s ease-in-out infinite alternate; 
+}
+/*.red:hover{
+  color:#FF1177;
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; 
+}*/
+/*#gameMode {
+  margin: 4px;
+  float:left;
+}*/
+
+.chickpic-left img{
+  height: 100px;
+  width: 100px;
+  
+}
+.chickpic-right img{
+  height: 100px;
+  width: 100px;
+  
+}
+
+#gameMode {
+  width:300px;
+  margin:auto;
+}
+
+#gameMode label {
+  float:left;
+  width:310px;
+  margin:4px;
+  background-color:black;
+  border-radius:4px;
+  border:1px solid black;
+  overflow:none;
+}
+
+#gameMode label span {
+    text-align:center;
+    font-size: 32px;
+    padding:7px 0px;
+    display:block;
+}
+
+#gameMode label input {
+    position:absolute;
+    top:-20px;
+}
+
+#gameMode input:checked + span {
+    background-color:#404040;
+    color:#F7F7F7;
+}
+/*#gameMode .blue {
+    background-color:#00BFFF;
+    color:#333;
+}*/
+
+#gameMode .blue {
+  font-size:1.5em;
+  color:#228DFF;
+  font-family:Arcade;
+/*  border:1px solid #D0D0D0;
+  border-radius: 4px;*/
+}
+.blue a:hover{
+  -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon2 1.5s ease-in-out infinite alternate;
+  animation: neon2 1.5s ease-in-out infinite alternate;
+}
+.blue:hover{
+color:#ffffff;  
+}
+
+#gameMode .blue {
+    background-color:gray;
+    color:#333;
+}
+
+
+/*glow for webkit*/
+@-webkit-keyframes neon1 {
+  from {
+    text-shadow: 0 0 5px #fff,
+               0 0 10px  #fff,
+               0 0 15px  #fff,
+               0 0 20px  #FF1177,
+               0 0 40px  #FF1177,
+               0 0 80px  #FF1177,
+               0 0 100px #FF1177,
+               0 0 150px #FF1177;
+  }
+  to {
+    text-shadow: 0 0 5px #fff,
+               0 0 5px #fff,
+               0 0 8px #fff,
+               0 0 10px #FF1177,
+               0 0 20px #FF1177,
+               0 0 20px #FF1177,
+               0 0 25px #FF1177,
+               0 0 30px #FF1177;
+  }
+}
+
+
+@-webkit-keyframes neon2 {
+  from {
+    text-shadow: 0 0 10px #fff,
+               0 0 20px  #fff,
+               0 0 30px  #fff,
+               0 0 40px  #228DFF,
+               0 0 70px  #228DFF,
+               0 0 80px  #228DFF,
+               0 0 100px #228DFF,
+               0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 15px #fff,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+  }
+}
+
+

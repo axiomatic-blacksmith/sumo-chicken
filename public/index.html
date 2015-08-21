@@ -6,21 +6,59 @@
     <script src="lib/phaser/build/phaser.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
   </head>
   <body>
     <script src="build.js"></script>
     <div id="main">
-      <h1 class="header">SUMO CHICKEN</h1>
+      <h1 class="header red">SUMO CHICKEN 2.0</h1>
+      <span class="chickpic-right"><img id="left" src="assets/chickenlogo_360_right.png"></span>
+      <span class="chickpic-left"><img id="right" src="assets/chickenlogo_360.png"></span>
+      
       <form class="login" onsubmit="return startGame()">
         <p>enter a username</p>
         <div><input type="text" id="username"></input></div>
         <p><b>Choose a Game Mode:</b></p>
-        <div><input type="radio" name="game-mode" value="Classic" checked> Classic</div>
-        <div><input type="radio" name="game-mode" value="Kill Count"> Kill Count</div>
-        <div><input type="radio" name="game-mode" value="Hearts"> Hearts</div>
+        <div id="gameMode">
+        <label class="blue"><a><input  type="radio" name="game-mode" value="Classic" checked><span>Classic</span></a></label>
+        <label class="blue"><a><input  type="radio" name="game-mode" value="Kill Count"><span>Kill Count</span></a></label>
+        <label class="blue"><a><input  type="radio" name="game-mode" value="Hearts"><span>Hearts</span></a></label>
+        <div>
         <div><input class="submitButton" type="submit" value="play the game"></input></div>
       </form> 
       <a href="aboutUs.html"><p>About Us</p></a>
     </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      console.log("READY");
+      $left = $('#left');
+      $right = $('#right');
+      console.log($left);
+
+      $left.animate({
+        marginLeft: "-=200px"
+      }, 500, function(){});
+
+      var leftBumpAndBack = function(){
+        var time = Math.floor(Math.random()*700) + 400;
+        var time2 = Math.floor(Math.random()*700) + 400;
+
+        $left.animate({
+          marginLeft: "+=400px"
+        }, time, function(){
+          $left.animate({
+            marginLeft:"-=400px"
+          }, time2, function(){
+            leftBumpAndBack();
+          })
+        });
+      };
+
+      leftBumpAndBack();
+
+    });
+    </script> 
   </body>
 </html>
