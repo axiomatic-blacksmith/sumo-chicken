@@ -7,6 +7,8 @@ var preload = function(){
   game.load.image('cloud', 'assets/cloud-platform.png');
   game.load.image('platform', 'assets/platform.png');
   game.load.image('background', 'assets/forest.png');
+  game.load.image('background-hearts', 'assets/background-hearts.png');
+  game.load.image('background-killmode', 'assets/background-killmode.png');
   game.load.image('lava', 'assets/lava.png'); // lava sourced from: http://walen.se/sprites/?level=picture&id=969
   game.load.spritesheet('fireball', 'assets/explosion17.png', 64, 64);
   game.load.image('heart', 'assets/Heart.png');
