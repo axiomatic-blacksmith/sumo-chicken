@@ -30,20 +30,20 @@ var Lobby = function(maxSize, mode) {
   };
 
   var breakTimer = function() {
-    newLobby.timer++;
+    newLobby.timer--;
     // console.log('GAME OVER: ', newLobby.timer);
-    if (newLobby.timer >= breakTime) {
+    if (newLobby.timer === 0) {
       clearInterval(currTimer);
-      newLobby.timer = 0;
       newLobby.gameActive = true;
       newLobby.winner = null;
+      newLobby.resetGame();
       currTimer = setInterval(gameTimer, 1000);
     }
   };
 
   newLobby.gameOver = function(winner) {
     clearInterval(currTimer);
-    newLobby.timer = 0;
+    newLobby.timer = 15;
     newLobby.gameActive = false;
     newLobby.winner = winner;
     currTimer = setInterval(breakTimer, 1000);

@@ -22,22 +22,22 @@ var update = function(){
   // Game updates every 2 frames with last update data received
   if (!game.paused && syncTimer % syncRate === 0 && lastData) {
 
-    var syncKeys = Object.keys(lastData);
+    var syncKeys = Object.keys(lastData.chickens);
     scoreList = [];
     syncKeys.forEach(function(chicken) {
-      scoreList.push([lastData[chicken].username, lastData[chicken].score]);
+      scoreList.push([lastData.chickens[chicken].username, lastData.chickens[chicken].score]);
       if (chicken !== socket.id) {
-        // console.log(lastData[chicken]);
+        // console.log(lastData.chickens[chicken]);
         if (otherChickens[chicken]) {
-          syncExistingChicken(otherChickens[chicken], lastData[chicken]);
+          syncExistingChicken(otherChickens[chicken], lastData.chickens[chicken]);
           
         } else {
-          addNewChicken(chicken, lastData[chicken]);
+          addNewChicken(chicken, lastData.chickens[chicken]);
         }
       } else {
-        player.score = lastData[chicken].score;
-        if (player.level !== lastData[chicken].kills) {
-          player.level = lastData[chicken].kills;
+        player.score = lastData.chickens[chicken].score;
+        if (player.level !== lastData.chickens[chicken].kills) {
+          player.level = lastData.chickens[chicken].kills;
           upgradeChicken(player, player.level);
         }
       }
