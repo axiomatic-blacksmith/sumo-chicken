@@ -8,7 +8,7 @@ var update = function(){
     var score = game.add.bitmapText(-100,
                                   - game.camera.height / 2 + 30,
                                   'carrier_command',
-                                  'SCORE:'+player.score+'\nLEVEL:'+player.level, 30);
+                                  'SCORE:'+player.score+'\n\nLEVEL:'+player.level, 30);
 
 
     score.fixedToCamera = true;
@@ -206,17 +206,27 @@ var displayScoreBoard = function(data) {
     0,
     0,
     'carrier_command',
-    '- TOP 5 - ',
-    30
+    ' --------- \n|  TOP 5  |\n|---------|',
+    24
   );
 
+  var fillSpaces = function(string){
+    if(string.length<5){
+      while(string.length<5){
+        string = string + ' ';
+      }
+    }
+    return string;
+  };
+
   for (var i = 0; i < Math.min(data.length, 5); i++) {
-    scoreboard.text += '\n' + data[i][0] + (data[i][1] > 9 ? ':' : ': ') + data[i][1];
+    scoreboard.text += '\n|' + fillSpaces(data[i][0].substring(0,5)) + (data[i][1] > 9 ? ':' : ': ') + data[i][1] + ' |';
   }
+  scoreboard.text += '\n--------- ';
 
   scoreboard.align = 'right';
   scoreboard.fixedToCamera = true;
-  scoreboard.cameraOffset.setTo(game.camera.width - scoreboard.width, 10);
+  scoreboard.cameraOffset.setTo(game.camera.width - ( scoreboard.width + 30 ), 10);
   scoreboard.lifespan = 1;
 };
 
