@@ -1,6 +1,16 @@
+
+html { 
+  background: url(../assets/forest.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 body {
   margin: 0;
-  font-family: 'Karamatic';
+  font-family: 'Arcade';
+  color:#F2EC4E;
+  letter-spacing: 2px;
 }
 
 #main {
@@ -13,19 +23,26 @@ body {
 }
 
 input[type=text] {
+  font-family:Arcade;
   font-size: 1.4em;
   text-align: center;
-  margin: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  background-color: black;
+  color:#F2ECEF;
 }
 
 input[type=submit] {
-  padding: 20px 80px;
-  color: white;
+  margin-top: 30px;
+  font-family:Arcade; 
+  padding: 20px 68px 20px 78px;
+  color:#F2EC4E;
   font-size: 1.3em;
   background: #519AA0;
   border: none;
   border-radius: 50px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 #aboutUs {
@@ -69,6 +86,18 @@ h1 {
 .teamMember-quote {
   text-align: justify;
 }
+.panel {
+  background-color: #343D73;
+  margin: auto;
+  width: 350px;
+  border-radius: 5px;
+  padding: 10px; 5px;
+}
+
+p {
+  font-size: 1.5em;
+  margin-bottom: -1px;
+}
 
 /*@font-face {
     font-family:"Karamatic";
@@ -97,35 +126,30 @@ h1 {
 
 
 
-body{
-  /*background-color: #222222;
-  background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;*/
-  background-image: url(../assets/forest.png);
-  background-repeat: no-repeat;
-  background-position: center center fixed;
-
-   -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-#container{
-  width:500px;
-  margin:auto;
-}
-
-
-/*neeeeoooon*/
-/*p{
-  text-align:center;
-  font-size:7em;
-  margin:20px 0 20px 0; 
+/*input:focus,textarea:focus,select:focus{
+  border:1px solid #fafafa;
+  -webkit-box-shadow:0 0 6px #007eff;
+  -moz-box-shadow:0 0 5px #007eff;
+  box-shadow:0 0 25px #007eff;
+  outline: none;
+  border-radius: 5px;
 }*/
+.glowing-border {
+    border: 2px solid #dadada;
+    border-radius: 7px;
+}
+
+.glowing-border:focus { 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 25px #9ecaed;
+}
+
+
 
 .a{
   text-decoration:none; 
-  -webkit-transition: all 0.2s;
+  -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   transition: all 0.5s;
 }
@@ -143,10 +167,7 @@ body{
   -moz-animation: none;
   animation: none; 
 }*/
-/*#gameMode {
-  margin: 4px;
-  float:left;
-}*/
+
 
 .chickpic-left img{
   height: 100px;
@@ -186,17 +207,24 @@ body{
     top:-20px;
 }
 
-#gameMode input:checked + span {
-    background-color:#404040;
+/*#gameMode input:checked + span {
+    background-color:black;
     color:#F7F7F7;
-}
-/*#gameMode .blue {
-    background-color:#00BFFF;
-    color:#333;
 }*/
+
+#gameMode input:checked + span {
+    background-color:#F2EC4E;
+    color:#2C3698;
+
+
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; 
+}
 
 #gameMode .blue {
   font-size:1.5em;
+  background-color:black;
   color:#228DFF;
   font-family:Arcade;
 /*  border:1px solid #D0D0D0;
@@ -211,33 +239,33 @@ body{
 color:#ffffff;  
 }
 
-#gameMode .blue {
+/*#gameMode .blue {
     background-color:gray;
     color:#333;
-}
+}*/
 
 
 /*glow for webkit*/
 @-webkit-keyframes neon1 {
   from {
-    text-shadow: 0 0 5px #fff,
-               0 0 10px  #fff,
-               0 0 15px  #fff,
-               0 0 20px  #FF1177,
+    text-shadow: 0 0 10px #fff,
+               0 0 20px  #fff,
+               0 0 30px  #fff,
                0 0 40px  #FF1177,
+               0 0 70px  #FF1177,
                0 0 80px  #FF1177,
                0 0 100px #FF1177,
                0 0 150px #FF1177;
   }
   to {
     text-shadow: 0 0 5px #fff,
-               0 0 5px #fff,
-               0 0 8px #fff,
-               0 0 10px #FF1177,
+               0 0 10px #fff,
+               0 0 15px #fff,
                0 0 20px #FF1177,
-               0 0 20px #FF1177,
-               0 0 25px #FF1177,
-               0 0 30px #FF1177;
+               0 0 35px #FF1177,
+               0 0 40px #FF1177,
+               0 0 50px #FF1177,
+               0 0 75px #FF1177;
   }
 }
 
