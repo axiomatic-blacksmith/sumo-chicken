@@ -15,6 +15,13 @@ var update = function(){
     score.cameraOffset.setTo(game.camera.width / 2 - 115, 10);
 
     score.lifespan = 1;
+    
+    var timer = game.add.bitmapText(0, 0, 'carrier_command', '' + player.timer, 50);
+
+    timer.fixedToCamera = true;
+    timer.cameraOffset.setTo(game.camera.width / 2 - timer.width / 2, score.height + 40);
+
+    timer.lifespan = 1;
   }
 
 
@@ -72,6 +79,8 @@ var update = function(){
 
       gameover.lifespan = 250;
     }
+
+    player.timer = lastData.timer;
 
     lastData = null;
 
