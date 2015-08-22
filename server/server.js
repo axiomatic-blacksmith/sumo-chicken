@@ -25,7 +25,37 @@ io.on('connection', function(socket) {
 
   var playerLobby = serverUtils.getLobbyById(socket.id);
 
-  if(mode === 'Hearts' && !playerLobby.hasHearts) heartsUtils.addHeartsToLobby(playerLobby);
+  if(!playerLobby.initialized) {
+    if(mode === 'Hearts') {
+      heartsUtils.addHeartsToLobby(playerLobby);
+      playerLobby.findWinner = function() {
+        var winner = playerLobby.players[0];
+        if (!winner) return null;
+        var hiscore = playerUtils.getPlayers()[winner].score;
+        for (var i = 1; i < playerLobby.players.length; i++) {
+          var currScore = playerUtils.getPlayers()[playerLobby.players[1]].score;
+          if (currScore > hiscore) {
+            winner = players[i];
+            hiscore = currScore;
+          }
+        }
+        return winner;
+      };
+    }
+
+    playerLobby.resetGame = function() {
+      playerLobby.players.forEach(function (socketID) {
+        console.log('resetting game');
+        var player = playerUtils.getPlayers()[socketID];
+        player.score = 0;
+        player.kills = 0;
+      });
+      if (mode === 'Hearts') {
+        heartsUtils.addHeartsToLobby(playerLobby);
+      }
+    };
+    playerLobby.initialized = true;
+  }
 
   if(mode === 'Hearts') socket.emit('syncHeart', playerLobby.getHearts());
   
@@ -66,6 +96,9 @@ io.on('connection', function(socket) {
       if (data.killer !== null) {
         killer.kills++;
         killer.score++;
+        if (killer.score === 10) {
+          playerUtils.win(data.killer);
+        }
       }
     } else if (mode === 'Hearts') {
       player.kills = 0;
@@ -102,10 +135,15 @@ io.on('connection', function(socket) {
 // SENT: a hash with player information at corresponding socketIDs
 setInterval(function() {
   connectedSockets.forEach(function(socketID) {
-
+    var currLobby = serverUtils.getLobbyById(socketID);
     // Only send sync info for players that are also in the same lobby
     // as the user with socketID.
-    io.sockets.connected[socketID].emit('sync', playerUtils.getPlayersByLobby(socketID));
+    io.sockets.connected[socketID].emit('sync', {
+      gameActive: currLobby.gameActive,
+      winner: currLobby.winner,
+      timer: currLobby.timer,
+      chickens: playerUtils.getPlayersByLobby(socketID)
+    });
   });
 }, 50);
 

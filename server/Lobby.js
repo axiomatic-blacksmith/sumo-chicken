@@ -2,7 +2,7 @@
 var Lobby = function(maxSize, mode) {
 
   var newLobby = {};
-  var players = []; //stores socketIDs
+  newLobby.players = []; //stores socketIDs
 
   var timeLimit;
   var breakTime = 15;
@@ -19,45 +19,51 @@ var Lobby = function(maxSize, mode) {
 
   var gameTimer = function() {
     newLobby.timer++;
+    // console.log('GAME TIME: ', newLobby.timer);
     if (newLobby.timer >= timeLimit) {
-      newLobby.gameOver();
+      if (typeof newLobby.findWinner === 'function') {
+        newLobby.gameOver(newLobby.findWinner());
+      } else  {
+        newLobby.gameOver(null);
+      }
     }
   };
 
   var breakTimer = function() {
-    newLobby.timer++;
-    if (newLobby.timer >= breakTime) {
+    newLobby.timer--;
+    // console.log('GAME OVER: ', newLobby.timer);
+    if (newLobby.timer === 0) {
       clearInterval(currTimer);
-      newLobby.timer = 0;
       newLobby.gameActive = true;
       newLobby.winner = null;
+      newLobby.resetGame();
       currTimer = setInterval(gameTimer, 1000);
     }
   };
 
   newLobby.gameOver = function(winner) {
     clearInterval(currTimer);
-    newLobby.timer = 0;
+    newLobby.timer = 15;
     newLobby.gameActive = false;
     newLobby.winner = winner;
     currTimer = setInterval(breakTimer, 1000);
   };
 
   newLobby.full = function() {
-    return maxSize <= players.length;
+    return maxSize <= newLobby.players.length;
   };
 
   newLobby.addPlayer = function(socketID) {
-    players.push(socketID);
+    newLobby.players.push(socketID);
   };
 
   newLobby.removePlayer = function(socketID) {
-    var index = players.indexOf(socketID);
-    players.splice(index, 1);
+    var index = newLobby.players.indexOf(socketID);
+    newLobby.players.splice(index, 1);
   };
 
   newLobby.getPlayerIDs = function() {
-    return players;
+    return newLobby.players;
   };
 
   var currTimer = setInterval(gameTimer, 1000);
