@@ -96,7 +96,7 @@ io.on('connection', function(socket) {
       if (data.killer !== null) {
         killer.kills++;
         killer.score++;
-        if (killer.score === 10) {
+        if (killer.score === 2) {
           playerUtils.win(data.killer);
         }
       }
