@@ -44,7 +44,7 @@
 
       $('#classic').hover(function(e){
         current = $('html').css('background');
-        $('html').css('background', 'url(../assets/forest.png');
+        $('html').css('background ', 'url(../assets/forest.png) no-repeat center center fixed');
         $('html').css('-webkit-background-size', 'cover');
         $('html').css('background-size', 'cover');
       }, function(e){
@@ -53,7 +53,7 @@
 
       $('#kill').hover(function(e){
         current = $('html').css('background');
-        $('html').css('background', 'url(../assets/background-killmode.png');
+        $('html').css('background', 'url(../assets/background-killmode.png) no-repeat center center fixed');
         $('html').css('-webkit-background-size', 'cover');
         $('html').css('background-size', 'cover');
       }, function(e){
@@ -62,7 +62,7 @@
 
       $('#hearts').hover(function(e){
         current = $('html').css('background');
-        $('html').css('background', 'url(../assets/background-hearts.png');
+        $('html').css('background', 'url(../assets/background-hearts.png) no-repeat center center fixed');
         $('html').css('-webkit-background-size', 'cover');
         $('html').css('background-size', 'cover');
 
@@ -71,24 +71,29 @@
       });
 
       $('#hearts').click(function(e){
-        current = $('html').css('background');
-        $('html').css('background', 'url(../assets/background-hearts.png');
+        // current = $('html').css('background');
+        $('html').css('background', 'url(../assets/background-hearts.png) no-repeat center center fixed');
         $('html').css('-webkit-background-size', 'cover');
         $('html').css('background-size', 'cover');
+        current = $('html').css('background');
+
       });
 
       $('#kill').click(function(e){
-        current = $('html').css('background');
-        $('html').css('background', 'url(../assets/background-killmode.png');
+        $('html').css('background', 'url(../assets/background-killmode.png) no-repeat center center fixed');
         $('html').css('-webkit-background-size', 'cover');
         $('html').css('background-size', 'cover');
+        current = $('html').css('background');
+
       });
 
-      $('#forest').click(function(e){
-        current = $('html').css('background');
-        $('html').css('background', 'url(../assets/forest.png');
+      $('#classic').click(function(e){
+        // current = $('html').css('background');
+        $('html').css('background', 'url(../assets/forest.png) no-repeat center center fixed');
         $('html').css('-webkit-background-size', 'cover');
         $('html').css('background-size', 'cover');
+        current = $('html').css('background');
+
       });
 
 

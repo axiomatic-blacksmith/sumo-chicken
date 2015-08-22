@@ -155,7 +155,7 @@ p {
 }
 
 .red{
-  color:#fff;
+  color:rgba(255, 100, 100, 0.7);
   font-family:Arcade;
   -webkit-animation: neon1 3.5s ease-in-out infinite alternate;
   -moz-animation: neon1 1.5s ease-in-out infinite alternate;
