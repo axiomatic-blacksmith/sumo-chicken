@@ -53,6 +53,26 @@ var update = function(){
       return b[1] - a[1];
     });
 
+    if (!lastData.gameActive) {
+      var gameover = game.add.bitmapText(
+        -250,
+        -200,
+        'carrier_command',
+        'GAME OVER',
+        50
+      );
+
+      gameover.align = 'center';
+      if (lastData.winner) {
+        gameover.text += '\nWINNER: ' + lastData.chickens[lastData.winner].username;
+      }
+
+      gameover.fixedToCamera = true;
+      gameover.cameraOffset.setTo(game.camera.width / 2 - gameover.width / 2, game.camera.height / 2 - 100);
+
+      gameover.lifespan = 250;
+    }
+
     lastData = null;
 
     socket.emit('sync', {'PX': player.x,
