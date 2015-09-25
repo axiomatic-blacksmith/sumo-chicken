@@ -1,12 +1,13 @@
-# Sumo Chicken
+# Sumo Chicken Redux
 
-A multiplayer browser game built with Phaser.io. [Play Sumo Chicken here!](https://sumo-chicken.herokuapp.com/)
+A multiplayer browser game built with Phaser.io. [Play Sumo Chicken here!](https://sumo-chicken-2.herokuapp.com/)
 
 ## Team
 
-  - __Product Owner__: Chris Lockwood ([@knockoutdonkey](https://github.com/knockoutdonkey))
-  - __Scrum Master__: Devon Koch ([@devonkoch](https://github.com/devonkoch))
-  - __Development Team__: Shelley Wang ([@shelleywang](https://github.com/shelleywang))
+  - __Product Owner__: Adnan Pirzada ([@adpirz](https://github.com/adpirz))
+  - __Scrum Master__: Daniel Friedenbach ([@dfriedenbach](https://github.com/dfriedenbach))
+  - __Development Team__: Mila Antonova ([@idillia](https://github.com/idillia))
+  - __Development Team__: Warren Wong ([@idillia](https://github.com/wrrnwng))
 
 ## Table of Contents
 
@@ -20,7 +21,7 @@ A multiplayer browser game built with Phaser.io. [Play Sumo Chicken here!](https
 
 ## Usage
 
-Feel free to run your own server of Sumo Chicken! Our official deployment is [here](https://sumo-chicken.herokuapp.com/).
+Feel free to run your own server of Sumo Chicken! Our official deployment is [here](https://sumo-chicken-2.herokuapp.com/).
 
 We'd love to see what you build on top of our game.
 
@@ -54,7 +55,7 @@ grunt start
 
 ### Roadmap
 
-View the project roadmap [here](https://waffle.io/invincible-elevator/sumo-chicken)
+View the project roadmap [here](https://waffle.io/axiomatic-blacksmith/sumo-chicken)
 
 
 ## Contributing
