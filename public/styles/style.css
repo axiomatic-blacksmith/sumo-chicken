@@ -23,17 +23,18 @@ body {
   font-size: 1.3em;
 }
 
-input[type=text] {
+#username {
   font-family:Arcade;
   font-size: 1.4em;
   text-align: center;
   margin: 5px;
   border-radius: 5px;
   background-color: black;
+  width: 90%;
   color:#F2ECEF;
 }
 
-input[type=submit] {
+.submit-button {
   margin-top: 30px;
   font-family:Arcade; 
   padding: 20px 68px 20px 78px;
@@ -150,14 +151,14 @@ p {
 
 
 
-.a{
+.a {
   text-decoration:none; 
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   transition: all 0.5s;
 }
 
-.red{
+.red {
   color:rgba(255, 100, 100, 0.7);
   font-family:Arcade;
   -webkit-animation: neon1 3.5s ease-in-out infinite alternate;
@@ -172,12 +173,12 @@ p {
 }*/
 
 
-.chickpic-left img{
+.chickpic-left img {
   height: 100px;
   width: 100px;
   
 }
-.chickpic-right img{
+.chickpic-right img {
   height: 100px;
   width: 100px;
   
@@ -233,12 +234,12 @@ p {
 /*  border:1px solid #D0D0D0;
   border-radius: 4px;*/
 }
-.blue a:hover{
+.blue a:hover {
   -webkit-animation: neon2 1.5s ease-in-out infinite alternate;
   -moz-animation: neon2 1.5s ease-in-out infinite alternate;
   animation: neon2 1.5s ease-in-out infinite alternate;
 }
-.blue:hover{
+.blue:hover {
 color:#ffffff;  
 }
 
@@ -296,4 +297,49 @@ color:#ffffff;
   }
 }
 
+@-moz-keyframes neon1 {
+  from {
+    text-shadow: 0 0 10px #fff,
+               0 0 20px  #fff,
+               0 0 30px  #fff,
+               0 0 40px  #FF1177,
+               0 0 70px  #FF1177,
+               0 0 80px  #FF1177,
+               0 0 100px #FF1177,
+               0 0 150px #FF1177;
+  }
+  to {
+    text-shadow: 0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 15px #fff,
+               0 0 20px #FF1177,
+               0 0 35px #FF1177,
+               0 0 40px #FF1177,
+               0 0 50px #FF1177,
+               0 0 75px #FF1177;
+  }
+}
 
+
+@-moz-keyframes neon2 {
+  from {
+    text-shadow: 0 0 10px #fff,
+               0 0 20px  #fff,
+               0 0 30px  #fff,
+               0 0 40px  #228DFF,
+               0 0 70px  #228DFF,
+               0 0 80px  #228DFF,
+               0 0 100px #228DFF,
+               0 0 150px #228DFF;
+  }
+  to {
+    text-shadow: 0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 15px #fff,
+               0 0 20px #228DFF,
+               0 0 35px #228DFF,
+               0 0 40px #228DFF,
+               0 0 50px #228DFF,
+               0 0 75px #228DFF;
+  }
+}
